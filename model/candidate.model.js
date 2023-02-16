@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const employeeSchema = new Schema({
+const candidateSchema = new Schema({
     firstName: {
         type: String,
         trim: true,
@@ -41,8 +41,15 @@ const employeeSchema = new Schema({
         trim: true,
         required: true,
     },
+    role: {
+        type: String,
+        enum: {
+            values: ["candidate", "employee"],
+            message: "Role must be candidate or employee"
+        }
+    }
 })
 
-const Employee = model("Employee", employeeSchema);
+const Candidate = model("Candidate", candidateSchema);
 
-module.exports = Employee;
+module.exports = Candidate;
