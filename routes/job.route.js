@@ -7,6 +7,9 @@ router.route("/")
 
 router.get("/:id", jobController.getJobById)
 
-
+router.post("/apply", jobController.applyToJob)
+router.get("/applied/:email", jobController.appliedJob)
+router.post("/query", jobController.jobQuery)
+router.post("/reply", jobController.jobReply)
 
 module.exports = router;

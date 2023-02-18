@@ -45,6 +45,20 @@ const jobSchema = Schema({
         type: String,
         required: true
     },
+    applicants: [
+        {
+            type: String,
+            required: true
+        }
+    ],
+    queries: [{
+        email: String,
+        jobId: String,
+        question: String,
+        reply:[{
+            type:String
+        }]
+    }]
 })
 
 const Job = model("Job", jobSchema);
