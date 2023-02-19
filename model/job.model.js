@@ -1,6 +1,14 @@
 const { Schema, model } = require("mongoose");
 
 const jobSchema = Schema({
+    email: {
+        type: String,
+        required: true
+    },
+    jobStatus: {
+        type: Boolean,
+        default: false
+    },
     companyName: {
         type: String,
         required: true
@@ -55,8 +63,8 @@ const jobSchema = Schema({
         email: String,
         jobId: String,
         question: String,
-        reply:[{
-            type:String
+        reply: [{
+            type: String
         }]
     }]
 })

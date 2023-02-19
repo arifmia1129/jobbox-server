@@ -136,3 +136,36 @@ exports.appliedJob = async (req, res) => {
         })
     }
 }
+
+exports.toggleJobStatus = async (req, res) => {
+    try {
+        const { statusCode, jobId } = req.body;
+        const job = await Job.findById(jobId);
+
+        if (!job) {
+            return res.status(400).json({
+                success: false,
+                message: "Job not found"
+            })
+        }
+
+        if (statusCode == 0) {
+            job.jobStatus = false;
+            await job.save();
+        }
+        if (statusCode == 1) {
+            job.jobStatus = true;
+            await job.save();
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Successfully change job status"
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: "Something broken"
+        })
+    }
+}
