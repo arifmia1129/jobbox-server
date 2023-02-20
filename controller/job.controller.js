@@ -201,7 +201,7 @@ exports.replyToMessage = async (req, res) => {
 exports.appliedJob = async (req, res) => {
     try {
         const { email } = req.params;
-        const jobs = await Job.find({ applicants: { $in: email } });
+        const jobs = await Job.find({ "applicants.email": email });
 
         res.status(200).json({
             success: true,

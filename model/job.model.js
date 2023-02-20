@@ -7,7 +7,7 @@ const jobSchema = Schema({
     },
     jobStatus: {
         type: Boolean,
-        default: false
+        default: true
     },
     companyName: {
         type: String,
