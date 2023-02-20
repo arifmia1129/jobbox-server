@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Job = require("../model/job.model")
 
 exports.createJob = async (req, res) => {
@@ -50,13 +51,30 @@ exports.getJobById = async (req, res) => {
         })
     }
 }
+exports.getJobsByEmail = async (req, res) => {
+    try {
+        const { email } = req.params;
+        const jobs = await Job.find({ email });
+
+        res.status(200).json({
+            success: true,
+            message: "Successfully get jobs",
+            jobs
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: "Something broken"
+        })
+    }
+}
 
 exports.applyToJob = async (req, res) => {
     try {
         const { id, email } = req.body;
         const job = await Job.findById(id);
 
-        job.applicants.push(email);
+        job.applicants.push({ email, message: [] });
 
         await job.save();
 
@@ -119,6 +137,67 @@ exports.jobReply = async (req, res) => {
         })
     }
 }
+
+
+exports.sendMessage = async (req, res) => {
+    try {
+        const { jobId, email, message } = req.body;
+        const job = await Job.findById(jobId);
+
+        job.applicants.forEach(async applicant => {
+            if (applicant.email === email) {
+                applicant.message.push({ message, reply: [] });
+                await job.save();
+            }
+        })
+
+        res.status(201).json({
+            success: true,
+            message: "Successfully send message"
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({
+            success: false,
+            message: "Something broken"
+        })
+    }
+}
+exports.replyToMessage = async (req, res) => {
+    try {
+        const { jobId, email, reply, msgId } = req.body;
+        const job = await Job.findById(jobId);
+
+
+        job.applicants.forEach(async applicant => {
+
+            if (applicant.email === email) {
+                applicant.message.forEach(async msg => {
+                    if (msg._id == (msgId)) {
+                        msg.reply.push(reply)
+                        await job.save();
+                        return res.status(201).json({
+                            success: true,
+                            message: "Successfully send message"
+                        })
+                    }
+                })
+            }
+        })
+
+
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({
+            success: false,
+            message: "Something broken"
+        })
+    }
+}
+
+
 exports.appliedJob = async (req, res) => {
     try {
         const { email } = req.params;

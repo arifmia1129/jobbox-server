@@ -55,6 +55,16 @@ const jobSchema = Schema({
     },
     applicants: [
         {
+            email: String,
+            message: [{
+                message: String,
+                reply: [{
+                    type: String
+                }]
+            }]
+        }
+        ,
+        {
             type: String,
             required: true
         }
