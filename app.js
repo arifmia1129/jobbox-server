@@ -6,7 +6,9 @@ const jobRouter = require("./routes/job.route");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: "https://jobbox-redux.netlify.app"
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
