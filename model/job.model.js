@@ -55,6 +55,10 @@ const jobSchema = Schema({
     },
     applicants: [
         {
+            created_at: {
+                type: Date,
+                default: Date.now
+            },
             email: String,
             message: [{
                 message: String,
@@ -77,6 +81,8 @@ const jobSchema = Schema({
             type: String
         }]
     }]
+}, {
+    timestamp: true
 })
 
 const Job = model("Job", jobSchema);

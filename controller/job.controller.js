@@ -200,8 +200,8 @@ exports.replyToMessage = async (req, res) => {
 
 exports.appliedJob = async (req, res) => {
     try {
-        const { email } = req.params;
-        const jobs = await Job.find({ "applicants.email": email });
+        const { email, sort } = req.params;
+        const jobs = await Job.find({ "applicants.email": email }).sort({ "applicants.created_at": Number(sort) });
 
         res.status(200).json({
             success: true,

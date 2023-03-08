@@ -9,7 +9,7 @@ router.get("/:id", jobController.getJobById)
 router.get("/employer/:email", jobController.getJobsByEmail)
 
 router.post("/apply", jobController.applyToJob)
-router.get("/applied/:email", jobController.appliedJob)
+router.get("/applied/:email/:sort", jobController.appliedJob)
 router.post("/query", jobController.jobQuery)
 router.post("/reply", jobController.jobReply)
 router.post("/status", jobController.toggleJobStatus)
